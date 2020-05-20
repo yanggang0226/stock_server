@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public interface StockTradeMapper {
 
-    List<TradeModel> getStockTradeList(@Param("tradeId") String tradeId) throws Exception;
+    List<TradeModel> getStockTradeList(@Param("tradeId") Integer tradeId) throws Exception;
 
     Integer tradeInfoAction(TradeModel tradeModel) throws Exception;
 
-    TradeModel getLatestTrade(@Param("tradeId") String tradeId) throws Exception;
+    TradeModel getLatestTrade(@Param("tradeId") Integer tradeId) throws Exception;
+
+    Integer getMaxTradeId() throws Exception;
 
 }

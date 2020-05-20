@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,18 +54,14 @@ class StockTradeControllerTest {
 
     @Test
     void insertTrade() throws Exception {
-        TradeModel tradeModel = new TradeModel();
-        tradeModel.setTradeId("5");
-        tradeModel.setSecurityCode("REL");
-        tradeModel.setQuantity(50);
-        //insert
-        tradeModel.setDbOperation(1);
-        //buy
-        tradeModel.setUserOperation(1);
-
         MvcResult mvcResult = mockMvc.perform(post("/trade/insert")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JSON.toJSONString(tradeModel)))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("tradeId", "4")
+                .param("securityCode", "INF")
+                .param("quantity", "50")
+                .param("userOperation", "1")
+                .accept(MediaType.TEXT_HTML_VALUE))
+                .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
@@ -75,18 +69,12 @@ class StockTradeControllerTest {
 
     @Test
     void updateTrade() throws Exception {
-        TradeModel tradeModel = new TradeModel();
-        tradeModel.setTradeId("4");
-        tradeModel.setSecurityCode("REL");
-        tradeModel.setQuantity(50);
-        //insert
-        tradeModel.setDbOperation(2);
-        //buy
-        tradeModel.setUserOperation(1);
-        String requestJson = JSON.toJSONString(tradeModel);
         MvcResult mvcResult = mockMvc.perform(post("/trade/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(requestJson)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("tradeId", "4")
+                .param("securityCode", "REL")
+                .param("quantity", "60")
+                .param("userOperation", "1")
                 .accept(MediaType.TEXT_HTML_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -96,18 +84,12 @@ class StockTradeControllerTest {
 
     @Test
     void cancelTrade() throws Exception {
-        TradeModel tradeModel = new TradeModel();
-        tradeModel.setTradeId("1");
-        tradeModel.setSecurityCode("REL");
-        tradeModel.setQuantity(50);
-        //insert
-        tradeModel.setDbOperation(3);
-        //buy
-        tradeModel.setUserOperation(1);
-        String requestJson = JSON.toJSONString(tradeModel);
         MvcResult mvcResult = mockMvc.perform(post("/trade/cancel")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(requestJson)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("tradeId", "4")
+                .param("securityCode", "REL")
+                .param("quantity", "50")
+                .param("userOperation", "1")
                 .accept(MediaType.TEXT_HTML_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

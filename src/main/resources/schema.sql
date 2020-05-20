@@ -3,12 +3,12 @@ drop table if exists STOCK_TRADE_INFO;
 create table STOCK_TRADE_INFO
 (
     TRANSACTIONID INTEGER(11) NOT NULL auto_increment,
-    TRADEID       VARCHAR(20) not null,
-    VERSION       VARCHAR(20) not null,
+    TRADEID       INTEGER(11) not null,
+    VERSION       INTEGER(11) not null,
     SECURITYCODE  VARCHAR(20) not null,
-    QUANTITY      INTEGER     not null,
-    DBOPERATION   INTEGER     not null,
-    USEROPERATION INTEGER     not null,
+    QUANTITY      INTEGER(11) not null,
+    DBOPERATION   INTEGER(1)  not null,
+    USEROPERATION INTEGER(1)  not null,
     primary key (TRANSACTIONID)
 );
 

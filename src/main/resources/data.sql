@@ -1,7 +1,7 @@
 INSERT INTO "STOCK_TRADE_INFO" (TRADEID, VERSION, SECURITYCODE, QUANTITY, DBOPERATION, USEROPERATION) VALUES
-('1', '1', 'REL', 50, 1, 1),
-('2', '1', 'ITC', 40, 1, 2),
-('3', '1', 'INF', 70, 1, 1),
-('1', '2', 'REL', 60, 2, 1),
-('2', '2', 'ITC', 30, 3, 1),
-('4', '1', 'INF', 20, 1, 2);
+(1, 1, 'REL', 50, 1, 1),
+(2, 1, 'ITC', 40, 1, 2),
+(3, 1, 'INF', 70, 1, 1),
+(1, 2, 'REL', 60, 2, 1),
+(2, 2, 'ITC', 30, 3, 1),
+(4, 1, 'INF', 20, 1, 2);

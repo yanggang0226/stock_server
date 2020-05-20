@@ -8,9 +8,9 @@ public class TradeModel {
 
     private Integer transactionId;
 
-    private String tradeId;
+    private Integer tradeId;
 
-    private String version;
+    private Integer version;
 
     private String securityCode;
 
@@ -28,19 +28,19 @@ public class TradeModel {
         this.transactionId = transactionId;
     }
 
-    public String getTradeId() {
+    public Integer getTradeId() {
         return tradeId;
     }
 
-    public void setTradeId(String tradeId) {
+    public void setTradeId(Integer tradeId) {
         this.tradeId = tradeId;
     }
 
-    public String getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

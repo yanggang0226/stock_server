@@ -2,10 +2,6 @@ package com.cienet.stock.controller;
 
 import java.util.Map;
 
-import com.cienet.stock.common.GeneralResponse;
-import com.cienet.stock.model.TradeModel;
-import com.cienet.stock.service.StockTradeService;
-import com.cienet.stock.vo.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cienet.stock.common.GeneralResponse;
+import com.cienet.stock.model.TradeModel;
+import com.cienet.stock.service.StockTradeService;
+import com.cienet.stock.vo.ResponseVO;
+
 /**
  * @author yanggang
  * @date 2020/5/19 15:30
  */
 @Controller
-@RequestMapping("trade")
 public class StockTradeController {
 
     private static final Logger logger = LoggerFactory.getLogger(StockTradeController.class);
@@ -31,9 +31,14 @@ public class StockTradeController {
     @Autowired
     private StockTradeService stockTradeService;
 
-    @GetMapping(value = "tradeInfo")
+    @GetMapping(value = "/")
+    public String index() {
+        return "redirect:/trade/select";
+    }
+
+    @GetMapping(value = "/trade/tradeInfo")
     public GeneralResponse<ResponseVO> getStockTradeList(
-            @RequestParam(value = "tradeId", required = false) String tradeId) {
+            @RequestParam(value = "tradeId", required = false) Integer tradeId) {
         logger.info("start getStockTradeList...");
         try {
             return stockTradeService.getStockTradeList(tradeId);
@@ -43,7 +48,7 @@ public class StockTradeController {
         }
     }
 
-    @PostMapping(value = "tradeInfo")
+    @PostMapping(value = "/trade/tradeInfo")
     public GeneralResponse tradeOperation(@RequestBody TradeModel tradeModel) {
         logger.info("start tradeOperation...");
         try {
@@ -54,7 +59,7 @@ public class StockTradeController {
         }
     }
 
-    @RequestMapping("/select")
+    @RequestMapping("/trade/select")
     public String getStockTradeList(Model model) {
         logger.info("start getStockTradeList...");
         try {
@@ -67,13 +72,13 @@ public class StockTradeController {
         return "result";
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/trade/insert")
     public String insertTrade(@ModelAttribute TradeModel tradeModel, Model model) {
         logger.info("start insertTrade...");
 
         try {
             tradeModel.setDbOperation(1);
-            tradeModel.setVersion("0");
+            tradeModel.setVersion(0);
             stockTradeService.tradeOperation(tradeModel);
             ResponseVO res = stockTradeService.getStockTradeList(null).getData();
             model.addAttribute("list", res.getTradeModels());
@@ -84,7 +89,7 @@ public class StockTradeController {
         return "result";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/trade/update")
     public String updateTrade(@ModelAttribute TradeModel tradeModel, Model model) {
         logger.info("start updateTrade...");
 
@@ -100,7 +105,7 @@ public class StockTradeController {
         return "result";
     }
 
-    @PostMapping("/cancel")
+    @PostMapping("/trade/cancel")
     public String cancelTrade(@ModelAttribute TradeModel tradeModel, Model model) {
         logger.info("start cancelTrade...");
         try {

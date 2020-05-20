@@ -15,6 +15,12 @@
         </where>
     </select>
 
+    <select id="getMaxTradeId"
+            resultType="java.lang.Integer">
+        SELECT MAX(TRADEID) TRADEID
+        FROM STOCK_TRADE_INFO
+    </select>
+
     <select id="getLatestTrade"
             resultType="com.cienet.stock.model.TradeModel">
         SELECT *

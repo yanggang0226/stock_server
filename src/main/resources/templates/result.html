@@ -4,109 +4,180 @@
 </head>
 
 <body>
-<table style="border:1px solid black ; width:780px">
-    <tr>
-        <td>TransactionID</td>
-        <td>TradeID</td>
-        <td>Version</td>
-        <td>SecurityCode</td>
-        <td>Quantity</td>
-        <td>Insert/Update/Cancel</td>
-        <td>Buy/Sell</td>
-    </tr>
-    <tr th:each="tra:${list}">
-        <td th:text="${tra.transactionId}"/>
-        <td th:text="${tra.tradeId}"/>
-        <td th:text="${tra.version}"/>
-        <td th:text="${tra.securityCode}"/>
-        <td th:text="${tra.quantity}"/>
-        <td>
+<div>
+    <table style="border:1px solid black ; width:780px" id="trade_list">
+        <tr>
+            <td>TransactionID</td>
+            <td>TradeID</td>
+            <td>Version</td>
+            <td>SecurityCode</td>
+            <td>Quantity</td>
+            <td>Insert/Update/Cancel</td>
+            <td>Buy/Sell</td>
+        </tr>
+        <tr th:each="tra:${list}">
+            <td th:text="${tra.transactionId}"/>
+            <td th:text="${tra.tradeId}"/>
+            <td th:text="${tra.version}"/>
+            <td th:text="${tra.securityCode}"/>
+            <td th:text="${tra.quantity}"/>
+            <td>
             <span th:if="${tra.dbOperation} eq 1">
                 INSERT
             </span>
-            <span th:if="${tra.dbOperation} eq 2">
+                <span th:if="${tra.dbOperation} eq 2">
                 UPDATE
             </span>
-            <span th:if="${tra.dbOperation} eq 3">
+                <span th:if="${tra.dbOperation} eq 3">
                 CANCEL
             </span>
-        </td>
-        <td>
+            </td>
+            <td>
             <span th:if="${tra.userOperation} eq 1">
                 Buy
             </span>
-            <span th:if="${tra.userOperation} eq 2">
+                <span th:if="${tra.userOperation} eq 2">
                 Sell
             </span>
-        </td>
-    </tr>
-</table>
-
-<br>
-<form action="/trade/insert" method="post">
-    TradeID:<input name="TradeId" style="width: 100px">
-    SecurityCode:<input name="securityCode" style="width: 100px">
-    Quantity:<input name="quantity" style="width: 100px">
-    Buy/Sell: <select name="userOperation" style="width: 100px">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div>
+        <button type="button" id="insert_btm" style="margin-right: 250px">Insert
+            trade
+        </button>
+        <button type="button" id="update_btm" style="margin-right: 250px">Update
+            trade
+        </button>
+        <button type="button" id="cancel_btm" style="margin-right: 250px">Cancel
+            trade
+        </button>
+    </div>
+    <br>
+    <div id="insert_trade" style="display: none;margin-bottom: 50px">
+        <form action="/trade/insert" method="post" id="insert_form">
+            SecurityCode:
+            <select name="securityCode" id="insert_securityCode"
+                    style="width: 100px" required>
+                <option value="REL">REL</option>
+                <option value="ITC">ITC</option>
+                <option value="INF">INF</option>
+            </select>
+            Quantity:<input name="quantity" id="insert_quantity"
+                            style="width: 100px" required>
+            Buy/Sell:
+            <select name="userOperation" id="insert_userOperation"
+                    style="width: 100px" required>
                 <option th:selected="selected" value="1">Buy</option>
                 <option value="2">Sell</option>
             </select>
-    <!--<input name="userOperation" style="width: 100px">-->
-    </td>
-    <input type="submit" value="Add Trade" style="width: 100px">
-</form>
+            </td>
+            <input type="submit" value="Add Trade" style="width: 100px"
+                   id="insert_form_btm">
+        </form>
+    </div>
 
-<br>
-<form action="/trade/update" method="post">
-    TradeID:<input name="TradeId" style="width: 100px">
-    SecurityCode:<input name="securityCode" style="width: 100px">
-    Quantity:<input name="quantity" style="width: 100px">
-    Buy/Sell:<select name="userOperation" style="width: 100px">
+    <div id="update_trade" style="display: none">
+        <form action="/trade/update" method="post">
+            TradeID:<input name="tradeId" id="update_tradeId"
+                           style="width: 100px" required>
+            SecurityCode:
+            <select name="securityCode" id="update_securityCode"
+                    style="width: 100px" required>
+                <option value="REL">REL</option>
+                <option value="ITC">ITC</option>
+                <option value="INF">INF</option>
+            </select>
+            Quantity:<input name="quantity" id="update_quantity"
+                            style="width: 100px" required>
+            Buy/Sell:
+            <select name="userOperation" id="update_userOperation"
+                    style="width: 100px" required>
                 <option th:selected="selected" value="1">Buy</option>
                 <option value="2">Sell</option>
             </select>
-    </td>
-    <input type="submit" value="Update Trade" style="width: 100px">
-</form>
+            </td>
+            <input type="submit" value="Update Trade" style="width: 100px"
+                   id="update_form_btm">
+        </form>
+    </div>
 
-<br>
-<form action="/trade/cancel" method="post">
-    TradeID:<input name="TradeId" style="width: 100px">
-    SecurityCode:<input name="securityCode" style="width: 100px">
-    Quantity:<input name="quantity" style="width: 100px">
-    Buy/Sell:<select name="userOperation" style="width: 100px">
+    <div id="cancel_trade" style="display: none">
+        <form action="/trade/cancel" method="post">
+            TradeID:<input name="tradeId" id="cancel_tradeId"
+                           style="width: 100px" required>
+            SecurityCode:
+            <select name="securityCode" id="cancel_securityCode"
+                    style="width: 100px" required>
+                <option value="REL">REL</option>
+                <option value="ITC">ITC</option>
+                <option value="INF">INF</option>
+            </select>
+            Quantity:<input name="quantity" id="cancel_quantity"
+                            style="width: 100px" required>
+            Buy/Sell:
+            <select name="userOperation" id="cancel_userOperation"
+                    style="width: 100px" required>
                 <option th:selected="selected" value="1">Buy</option>
                 <option value="2">Sell</option>
             </select>
-    </td>
-    <input type="submit" value="Cancel Trade" style="width: 100px">
-</form>
-
-</br>
-</br>
-<table style="border:1px solid black">
-    <tr>
-        <td>SecurityCode</td>
-        <td>Quantity</td>
-    </tr>
-    <tr>
-        <td>REL:</td>
-        <td th:text=${REL} id="tr1">
-    </tr>
-    <tr>
-        <td>ITC:</td>
-        <td th:text=${ITC} id="tr2">
-    </tr>
-    <tr>
-        <td>INF:</td>
-        <td th:text=${INF} id="tr3">
-    </tr>
-</table>
+            </td>
+            <input type="submit" value="Cancel Trade" style="width: 100px"
+                   id="cancel_form_btm">
+        </form>
+    </div>
+    </br>
+    </br>
+    <table style="border:1px solid black">
+        <tr>
+            <td>SecurityCode</td>
+            <td>Quantity</td>
+        </tr>
+        <tr>
+            <td>REL:</td>
+            <td th:text=${REL} id="rel_quantity">
+        </tr>
+        <tr>
+            <td>ITC:</td>
+            <td th:text=${ITC} id="itc_quantity">
+        </tr>
+        <tr>
+            <td>INF:</td>
+            <td th:text=${INF} id="inf_quantity">
+        </tr>
+    </table>
+</div>
 </body>
-<script type="text/javascript" src="/js/jquery	-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script>
-    $(function () {
 
+
+    $('#insert_btm').click(function () {
+        $("#update_trade").css('display', 'none');
+        $("#cancel_trade").css('display', 'none');
+        $("#insert_trade").css('display', 'inline');
     });
+
+    $('#update_btm').click(function () {
+        $("#insert_trade").css('display', 'none');
+        $("#cancel_trade").css('display', 'none');
+        $("#update_trade").css('display', 'inline');
+    });
+
+    $('#cancel_btm').click(function () {
+        $("#insert_trade").css('display', 'none');
+        $("#update_trade").css('display', 'none');
+        $("#cancel_trade").css('display', 'inline');
+    });
+
+    var cnmsg = {
+        required: "必选字段"
+    };
+
+    jQuery.extend(jQuery.validator.messages, cnmsg);
+
+
 </script>
 </html>
