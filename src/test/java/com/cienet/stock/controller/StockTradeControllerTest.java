@@ -28,8 +28,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebAppConfiguration
 class StockTradeControllerTest {
 
-    private RestTemplate template = new RestTemplate();
-
     private MockMvc mockMvc;
 
     @Autowired
