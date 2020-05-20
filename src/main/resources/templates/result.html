@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<table style="border:1px solid black ; width:780px">
+    <tr>
+        <td>TransactionID</td>
+        <td>TradeID</td>
+        <td>Version</td>
+        <td>SecurityCode</td>
+        <td>Quantity</td>
+        <td>Insert/Update/Cancel</td>
+        <td>Buy/Sell</td>
+    </tr>
+    <tr th:each="tra:${list}">
+        <td th:text="${tra.transactionId}"/>
+        <td th:text="${tra.tradeId}"/>
+        <td th:text="${tra.version}"/>
+        <td th:text="${tra.securityCode}"/>
+        <td th:text="${tra.quantity}"/>
+        <td>
+            <span th:if="${tra.dbOperation} eq 1">
+                INSERT
+            </span>
+            <span th:if="${tra.dbOperation} eq 2">
+                UPDATE
+            </span>
+            <span th:if="${tra.dbOperation} eq 3">
+                CANCEL
+            </span>
+        </td>
+        <td>
+            <span th:if="${tra.userOperation} eq 1">
+                Buy
+            </span>
+            <span th:if="${tra.userOperation} eq 2">
+                Sell
+            </span>
+        </td>
+    </tr>
+</table>
+
+<br>
+<form action="/trade/insert" method="post">
+    TradeID:<input name="TradeId" style="width: 100px">
+    SecurityCode:<input name="securityCode" style="width: 100px">
+    Quantity:<input name="quantity" style="width: 100px">
+    Buy/Sell: <select name="userOperation" style="width: 100px">
+                <option th:selected="selected" value="1">Buy</option>
+                <option value="2">Sell</option>
+            </select>
+    <!--<input name="userOperation" style="width: 100px">-->
+    </td>
+    <input type="submit" value="Add Trade" style="width: 100px">
+</form>
+
+<br>
+<form action="/trade/update" method="post">
+    TradeID:<input name="TradeId" style="width: 100px">
+    SecurityCode:<input name="securityCode" style="width: 100px">
+    Quantity:<input name="quantity" style="width: 100px">
+    Buy/Sell:<select name="userOperation" style="width: 100px">
+                <option th:selected="selected" value="1">Buy</option>
+                <option value="2">Sell</option>
+            </select>
+    </td>
+    <input type="submit" value="Update Trade" style="width: 100px">
+</form>
+
+<br>
+<form action="/trade/cancel" method="post">
+    TradeID:<input name="TradeId" style="width: 100px">
+    SecurityCode:<input name="securityCode" style="width: 100px">
+    Quantity:<input name="quantity" style="width: 100px">
+    Buy/Sell:<select name="userOperation" style="width: 100px">
+                <option th:selected="selected" value="1">Buy</option>
+                <option value="2">Sell</option>
+            </select>
+    </td>
+    <input type="submit" value="Cancel Trade" style="width: 100px">
+</form>
+
+</br>
+</br>
+<table style="border:1px solid black">
+    <tr>
+        <td>SecurityCode</td>
+        <td>Quantity</td>
+    </tr>
+    <tr>
+        <td>REL:</td>
+        <td th:text=${REL} id="tr1">
+    </tr>
+    <tr>
+        <td>ITC:</td>
+        <td th:text=${ITC} id="tr2">
+    </tr>
+    <tr>
+        <td>INF:</td>
+        <td th:text=${INF} id="tr3">
+    </tr>
+</table>
+</body>
+<script type="text/javascript" src="/js/jquery	-3.3.1.min.js"></script>
+<script>
+    $(function () {
+
+    });
+</script>
+</html>
